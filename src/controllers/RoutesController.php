@@ -83,10 +83,7 @@ class RoutesController extends Controller
         $this->requireAdmin();
 
         $routeId = \Craft::$app->getRequest()->getRequiredBodyParam('id');
-
-        Route::findOne(['id' => $routeId])->delete();
-
-        return $this->asJson(['success' => true]);
+        return $this->asJson(['success' => PasswordRoutes::getInstance()->routes->deleteRouteById($routeId)]);
     }
 
     public function actionLogin()

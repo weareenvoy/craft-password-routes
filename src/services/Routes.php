@@ -12,12 +12,22 @@ class Routes extends Component
 {
     const EVENT_BEFORE_SAVE_ROUTE = 'beforeSavePwRoute';
     const EVENT_AFTER_SAVE_ROUTE = 'afterSavePwRoute';
+    const EVENT_BEFORE_DELETE_ROUTE = 'beforeDeletePwRoute';
+    const EVENT_AFTER_DELETE_ROUTE = 'afterSavePwRoute';
 
     protected $_allRoutesById;
     protected $_fetchedAllRoutes = false;
 
 
-    public function saveRoute(Route $route, bool $runValidation = true){
+    /**
+     * @param Route $route
+     * @param bool $runValidation
+     * @return bool
+     * @throws RouteNotFoundException
+     * @throws \Exception
+     */
+    public function saveRoute(Route $route, bool $runValidation = true) : bool
+    {
         if ($runValidation && !$route->validate()) {
             \Craft::info('Route not saved due to validation error.', __METHOD__);
 
@@ -73,6 +83,51 @@ class Routes extends Component
         return true;
     }
 
+    /**
+     * @param int $routeId
+     * @return bool
+     * @throws \Exception
+     */
+    public function deleteRouteById(int $routeId) : bool
+    {
+        if (!$routeId) {
+            return false;
+        }
+
+        $route = $this->getRouteById($routeId);
+
+        if (!$route) {
+            return false;
+        }
+
+        // Fire a 'beforeDeletePwRoute' event
+        $this->trigger(self::EVENT_BEFORE_DELETE_ROUTE, new RouteEvent([
+            'route' => $route,
+        ]));
+
+        $transaction = \Craft::$app->getDb()->beginTransaction();
+        try {
+            RouteRecord::findOne(['id' => $route->id])->delete();
+
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+
+            throw $e;
+        }
+
+        // Fire an 'afterSavePwRoute' event
+        $this->trigger(self::EVENT_AFTER_DELETE_ROUTE, new RouteEvent([
+            'route' => $route,
+        ]));
+
+        return true;
+    }
+
+    /**
+     * @param int $routeId
+     * @return null|Route
+     */
     public function getRouteById(int $routeId)
     {
         if ($this->_allRoutesById !== null && array_key_exists($routeId, $this->_allRoutesById)) {
@@ -96,7 +151,10 @@ class Routes extends Component
         ]));
     }
 
-    public function getAllRoutes()
+    /**
+     * @return array
+     */
+    public function getAllRoutes() : array
     {
         if (!$this->_fetchedAllRoutes) {
             $this->_allRoutesById = RouteRecord::find()
