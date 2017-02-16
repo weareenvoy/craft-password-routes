@@ -1,13 +1,13 @@
 {% extends "_layouts/cp" %}
 
-{% set title = "Password Protect"|t('app') %}
+{% set title = "Password Routes"|t('app') %}
 {% set fullPageForm = true %}
 {% import "_includes/forms" as forms %}
 
 
 {% block content %}
-    <input type="hidden" name="action" value="passwordprotect/routes/save-route">
-    {{ redirectInput('passwordprotect') }}
+    <input type="hidden" name="action" value="passwordroutes/routes/save-route">
+    {{ redirectInput('passwordroutes') }}
 
     {% if route.id %}<input type="hidden" name="routeId" value="{{ route.id }}">{% endif %}
 

@@ -1,9 +1,9 @@
 {% extends "_layouts/cp" %}
-{% set title = "Password Protect"|t('app') %}
+{% set title = "Password Routes"|t('app') %}
 
 {% set extraPageHeaderHtml %}
     <div class="buttons right">
-        <a href="{{ url('passwordprotect/route/new') }}" class="btn submit add icon">{{ "New route"|t('app') }}</a>
+        <a href="{{ url('passwordroutes/route/new') }}" class="btn submit add icon">{{ "New route"|t('app') }}</a>
     </div>
 {% endset %}
 
@@ -23,7 +23,7 @@
                 {% for route in routes %}
                     <tr data-id="{{ route.id }}" data-name="{{ route.uriPattern }}">
                         <th scope="row" data-title="{{ 'Name'|t('app') }}"><code>{{ route.uriPattern }}</code></th>
-                        <td><a href="{{ url('passwordprotect/route/'~route.id) }}">{{ "Manage Route"|t('app') }}</a></td>
+                        <td><a href="{{ url('passwordroutes/route/'~route.id) }}">{{ "Manage Route"|t('app') }}</a></td>
                         <td class="thin"><a class="delete icon" title="{{ 'Delete'|t('app') }}" role="button"></a></td>
                     </tr>
                 {% endfor %}
@@ -36,7 +36,7 @@
     new Craft.AdminTable({
         tableSelector: '#routestable',
         noItemsSelector: '#noroutes',
-        deleteAction: 'passwordprotect/routes/delete-route',
+        deleteAction: 'passwordroutes/routes/delete-route',
         confirmDeleteMessage: '{{ "Are you sure you want to delete “{name}”?"|t('app') }}',
     });
 {% endjs %}

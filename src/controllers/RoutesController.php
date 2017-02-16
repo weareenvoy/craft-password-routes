@@ -19,7 +19,7 @@ class RoutesController extends Controller
         $routes = PasswordRoutes::getInstance()->routes->getAllRoutes();
 
         $variables['routes'] = $routes;
-        return $this->renderTemplate('passwordprotect/index', $variables);
+        return $this->renderTemplate('passwordroutes/index', $variables);
     }
 
     public function actionEditRoute(int $routeId = null, Route $route = null)
@@ -46,7 +46,7 @@ class RoutesController extends Controller
 
         $variables['route'] = $route;
 
-        return $this->renderTemplate('passwordprotect/_edit',$variables);
+        return $this->renderTemplate('passwordroutes/_edit',$variables);
     }
 
     public function actionSaveRoute()
@@ -95,7 +95,7 @@ class RoutesController extends Controller
 
         $variables['routeId'] = $routeId;
 
-        return $this->renderTemplate('passwordprotect/login',$variables);
+        return $this->renderTemplate('passwordroutes/login',$variables);
     }
 
 }
