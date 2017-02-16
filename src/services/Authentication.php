@@ -13,22 +13,26 @@ class Authentication extends Component
     protected $_routes;
     protected $_matchedRoute;
 
-    public function validateAuthentication()
+    public function isLoginRequired()
     {
         //
         if($this->_matchedRoute !== null){
             if($this->_getSession() != $this->_matchedRoute->uid){
-                \Craft::$app->getResponse()->redirect('passwordprotect/login/?routeId='. $this->_matchedRoute->id);
-                \Craft::$app->end();
+               return true;
             }
         }else{
             if($this->_matchedRoute = $this->_getMatchedRoute()){
                 if($this->_getSession() != $this->_matchedRoute->uid){
-                    \Craft::$app->getResponse()->redirect('passwordprotect/login/?routeId='. $this->_matchedRoute->id);
-                    \Craft::$app->end();
+                    return true;
                 }
             }
         }
+        return false;
+    }
+
+    public function getMatchedRoute()
+    {
+        return $this->_matchedRoute;
     }
 
     protected function _getMatchedRoute()

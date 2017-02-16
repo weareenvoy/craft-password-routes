@@ -26,7 +26,11 @@ class PasswordRoutes extends Plugin
 
         Event::on(Controller::class,Controller::EVENT_BEFORE_ACTION, function(ActionEvent $event){
             //Check if auth is required
-            PasswordRoutes::getInstance()->authentication->validateAuthentication();
+            $passwordRoutes = PasswordRoutes::getInstance();
+            if($passwordRoutes->authentication->isLoginRequired()){
+                \Craft::$app->getResponse()->redirect('passwordroutes/login?routeId='.$passwordRoutes->authentication->getMatchedRoute()->id);
+                \Craft::$app->end();
+            }
         });
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
