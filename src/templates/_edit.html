@@ -1,0 +1,44 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Password Protect"|t('app') %}
+{% set fullPageForm = true %}
+{% import "_includes/forms" as forms %}
+
+
+{% block content %}
+    <input type="hidden" name="action" value="passwordprotect/routes/save-route">
+    {{ redirectInput('passwordprotect') }}
+
+    {% if route.id %}<input type="hidden" name="routeId" value="{{ route.id }}">{% endif %}
+
+    {{ forms.textField({
+        label: "Uri Pattern"|t('app'),
+        instructions: "The uri route that will be password protected"|t('app'),
+        id: 'uriPattern',
+        class: 'code',
+        name: 'uriPattern',
+        value: route.uriPattern,
+        errors: route.getErrors('uriPattern'),
+        required: true
+    }) }}
+
+    {{ forms.textField({
+        label: "Username"|t('app'),
+        id: 'username',
+        name: 'username',
+        value: route.username,
+        errors: route.getErrors('username'),
+        required: true
+    }) }}
+
+    {{ forms.textField({
+        label: "Password"|t('app'),
+        id: 'password',
+        type: 'password',
+        name: 'password',
+        value: route.password,
+        errors: route.getErrors('password'),
+        required: true
+    }) }}
+{% endblock %}
+

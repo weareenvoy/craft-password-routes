@@ -1,0 +1,21 @@
+{
+  "name": "envoy/passwordprotect",
+  "description": "Password protected routes",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "minimum-stability": "dev",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "envoy\\passwordprotect\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "passwordprotect",
+    "name": "Password Protect",
+    "developer": "Envoy",
+    "developerUrl": "https://weareenvoy.com",
+    "class": "envoy\\passwordprotect\\PasswordProtect"
+  }
+}
