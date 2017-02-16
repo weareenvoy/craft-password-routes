@@ -100,6 +100,7 @@ class Routes extends Component
     {
         if (!$this->_fetchedAllRoutes) {
             $this->_allRoutesById = RouteRecord::find()
+                ->indexBy('id')
                 ->all();
 
             foreach ($this->_allRoutesById as $key => $value) {
