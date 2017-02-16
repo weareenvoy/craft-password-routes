@@ -1,11 +1,11 @@
 <?php
-namespace envoy\passwordprotect\controllers;
+namespace weareenvoy\passwordroutes\controllers;
 
 
 use craft\web\Controller;
-use envoy\passwordprotect\models\Route;
-use envoy\passwordprotect\PasswordProtect;
-use envoy\passwordprotect\records\RouteRecord;
+use weareenvoy\passwordroutes\models\Route;
+use weareenvoy\passwordroutes\PasswordRoutes;
+use weareenvoy\passwordroutes\records\RouteRecord;
 use yii\web\NotFoundHttpException;
 
 class RoutesController extends Controller
@@ -16,7 +16,7 @@ class RoutesController extends Controller
     {
         $this->requireAdmin();
 
-        $routes = PasswordProtect::getInstance()->routes->getAllRoutes();
+        $routes = PasswordRoutes::getInstance()->routes->getAllRoutes();
 
         $variables['routes'] = $routes;
         return $this->renderTemplate('passwordprotect/index', $variables);
@@ -28,7 +28,7 @@ class RoutesController extends Controller
 
         if($routeId !== null){
             if($route === null){
-                $route = PasswordProtect::getInstance()->routes->getRouteById($routeId);
+                $route = PasswordRoutes::getInstance()->routes->getRouteById($routeId);
 
                 if(!$route){
                     throw new NotFoundHttpException('Route not found');
@@ -60,7 +60,7 @@ class RoutesController extends Controller
         $route->username = \Craft::$app->getRequest()->getBodyParam('username');
         $route->password = \Craft::$app->getRequest()->getBodyParam('password');
 
-        if(!PasswordProtect::getInstance()->routes->saveRoute($route)){
+        if(!PasswordRoutes::getInstance()->routes->saveRoute($route)){
             \Craft::$app->getSession()->setError(\Craft::t('app', 'Couldn’t save the route.'));
 
             // Send the route back to the template

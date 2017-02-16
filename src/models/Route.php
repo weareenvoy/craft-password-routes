@@ -1,11 +1,11 @@
 <?php
 
-namespace envoy\passwordprotect\models;
+namespace weareenvoy\passwordroutes\models;
 
 
 use craft\base\Model;
 use craft\validators\SiteIdValidator;
-use envoy\passwordprotect\records\RouteRecord;
+use weareenvoy\passwordroutes\records\RouteRecord;
 use craft\validators\UniqueValidator;
 class Route extends Model
 {

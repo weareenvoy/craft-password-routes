@@ -1,24 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Envoy
- * Date: 2/14/17
- * Time: 7:11 PM
- */
-
-namespace envoy\passwordprotect;
+namespace weareenvoy\passwordroutes;
 
 
 use craft\base\Plugin;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;
-use envoy\passwordprotect\services\Authentication;
-use envoy\passwordprotect\services\Routes;
+use weareenvoy\passwordroutes\services\Authentication;
+use weareenvoy\passwordroutes\services\Routes;
 use yii\base\ActionEvent;
 use yii\base\Event;
 use yii\base\Controller;
 
-class PasswordProtect extends Plugin
+class PasswordRoutes extends Plugin
 {
     public $hasCpSection = true;
     /**
@@ -33,7 +26,7 @@ class PasswordProtect extends Plugin
 
         Event::on(Controller::class,Controller::EVENT_BEFORE_ACTION, function(ActionEvent $event){
             //Check if auth is required
-            PasswordProtect::getInstance()->authentication->validateAuthentication();
+            PasswordRoutes::getInstance()->authentication->validateAuthentication();
         });
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {

@@ -1,13 +1,12 @@
 <?php
-namespace envoy\passwordprotect\services;
+namespace weareenvoy\passwordroutes\services;
 
 
 use craft\base\Component;
-use envoy\passwordprotect\events\RouteEvent;
-use envoy\passwordprotect\errors\RouteNotFoundException;
-use envoy\passwordprotect\models\Route;
-use envoy\passwordprotect\records\RouteRecord;
-use yii\web\NotFoundHttpException;
+use weareenvoy\passwordroutes\events\RouteEvent;
+use weareenvoy\passwordroutes\errors\RouteNotFoundException;
+use weareenvoy\passwordroutes\models\Route;
+use weareenvoy\passwordroutes\records\RouteRecord;
 
 class Routes extends Component
 {

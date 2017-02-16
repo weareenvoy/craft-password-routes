@@ -1,9 +1,9 @@
 <?php
 
-namespace envoy\passwordprotect\services;
+namespace weareenvoy\passwordroutes\services;
 
 
-use envoy\passwordprotect\PasswordProtect;
+use weareenvoy\passwordroutes\PasswordRoutes;
 use yii\base\Component;
 
 class Authentication extends Component
@@ -34,7 +34,7 @@ class Authentication extends Component
     protected function _getMatchedRoute()
     {
         if($this->_routes === null){
-            $this->_routes = PasswordProtect::getInstance()->routes->getAllRoutes();
+            $this->_routes = PasswordRoutes::getInstance()->routes->getAllRoutes();
         }
 
         foreach ($this->_routes as $route){

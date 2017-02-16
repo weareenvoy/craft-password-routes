@@ -6,7 +6,7 @@
  * Time: 7:16 PM
  */
 
-namespace envoy\passwordprotect\events;
+namespace weareenvoy\passwordroutes\events;
 
 
 use yii\base\Event;

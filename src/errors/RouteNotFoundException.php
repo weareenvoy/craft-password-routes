@@ -6,7 +6,7 @@
  * Time: 7:35 PM
  */
 
-namespace envoy\passwordprotect\errors;
+namespace weareenvoy\passwordroutes\errors;
 
 
 use yii\base\Exception;

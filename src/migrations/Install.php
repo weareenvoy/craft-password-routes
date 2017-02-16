@@ -1,6 +1,6 @@
 <?php
 
-namespace envoy\passwordprotect\migrations;
+namespace weareenvoy\passwordroutes\migrations;
 
 
 use craft\db\Migration;

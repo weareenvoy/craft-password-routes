@@ -1,7 +1,7 @@
 <?php
 
 
-namespace envoy\passwordprotect\records;
+namespace weareenvoy\passwordroutes\records;
 
 
 use craft\db\ActiveRecord;
