@@ -24,9 +24,10 @@ class Install extends Migration
             'uid' => $this->uid(),
         ]);
 
+        $this->createIndex($this->db->getIndexName('{{%pw_routes}}', 'uriPattern', true), '{{%pw_routes}}', 'uriPattern', true);
+        $this->createIndex($this->db->getIndexName('{{%pw_routes}}', 'siteId', false, true), '{{%pw_routes}}', 'siteId', false);
+
         $this->addForeignKey($this->db->getForeignKeyName('{{%pw_routes}}', 'siteId'), '{{%pw_routes}}', 'siteId', '{{%sites}}', 'id', 'CASCADE', 'CASCADE');
-        $this->createIndex($this->db->getIndexName('{{%pw_routes}}', 'uriPattern', true), '{{%routes}}', 'uriPattern', true);
-        $this->createIndex($this->db->getIndexName('{{%pw_routes}}', 'siteId', false, true), '{{%routes}}', 'siteId', false);
 
         return true;
     }
