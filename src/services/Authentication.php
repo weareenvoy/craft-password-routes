@@ -84,7 +84,7 @@ class Authentication extends Component
 
     protected function _getUri(): string
     {
-        return '/'.\Craft::$app->getRequest()->getFullPath();
+        return strtolower('/'.\Craft::$app->getRequest()->getFullPath());
     }
 
 }
