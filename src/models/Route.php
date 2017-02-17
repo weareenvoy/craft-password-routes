@@ -10,8 +10,7 @@ use craft\validators\UniqueValidator;
 class Route extends Model
 {
     public $id;
-    public $siteId;
-    public $uriPattern;
+    public $uri;
     public $username;
     public $password;
     public $uid;
@@ -23,9 +22,8 @@ class Route extends Model
     public function rules()
     {
         return [
-            [['siteId'], SiteIdValidator::class],
-            [['uriPattern'], UniqueValidator::class, 'targetClass' => RouteRecord::class],
-            [['uriPattern','username'], 'required'],
+            [['uri'], UniqueValidator::class, 'targetClass' => RouteRecord::class],
+            [['uri','username'], 'required'],
             [['password'], 'required', 'when' => function($model){
                 return $model->id === null;
             }]

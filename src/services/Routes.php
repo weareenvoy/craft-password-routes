@@ -53,7 +53,7 @@ class Routes extends Component
         }
 
         //Populate Record
-        $routeRecord->uriPattern = $route->uriPattern;
+        $routeRecord->uri = $route->uri;
         $routeRecord->username = $route->username;
         if ((!$isNewRoute && !empty($route->password)) || $isNewRoute) {
             $routeRecord->password = md5($route->password);
@@ -144,7 +144,7 @@ class Routes extends Component
 
         return $this->_allRoutesById[$routeId] = new Route($routeRecord->toArray([
             'id',
-            'uriPattern',
+            'uri',
             'username',
             'password',
             'uid'
@@ -164,7 +164,7 @@ class Routes extends Component
             foreach ($this->_allRoutesById as $key => $value) {
                 $this->_allRoutesById[$key] = new Route($value->toArray([
                     'id',
-                    'uriPattern',
+                    'uri',
                     'username',
                     'password',
                     'uid'
@@ -175,6 +175,11 @@ class Routes extends Component
         }
 
         return array_values($this->_allRoutesById);
+    }
+
+    public function parseUri(string $uri)
+    {
+        return '/'.implode('/',explode('/',trim($uri,'/')));
     }
 
 }

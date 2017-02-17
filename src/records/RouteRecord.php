@@ -18,16 +18,4 @@ class RouteRecord extends ActiveRecord
     {
         return "{{%pw_routes}}";
     }
-
-    /**
-     * Returns the associated site.
-     *
-     * @return ActiveQueryInterface The relational query object.
-     */
-    public function getSite(): ActiveQueryInterface
-    {
-        return $this->hasOne(Site::class, ['id' => 'siteId']);
-    }
-
-
 }

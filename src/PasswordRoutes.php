@@ -36,7 +36,7 @@ class PasswordRoutes extends Plugin
                 ];
 
                 $query = http_build_query($queryArr);
-                \Craft::$app->getResponse()->redirect('passwordroutes/login?'.$query);
+                \Craft::$app->getResponse()->redirect('/passwordroutes/login?'.$query);
                 \Craft::$app->end();
             }
         });

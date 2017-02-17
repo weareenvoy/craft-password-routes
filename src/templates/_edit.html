@@ -12,13 +12,14 @@
     {% if route.id %}<input type="hidden" name="routeId" value="{{ route.id }}">{% endif %}
 
     {{ forms.textField({
-        label: "Uri Pattern"|t('app'),
+        label: "Uri"|t('app'),
         instructions: "The uri route that will be password protected"|t('app'),
-        id: 'uriPattern',
+        id: 'uri',
         class: 'code',
-        name: 'uriPattern',
-        value: route.uriPattern,
-        errors: route.getErrors('uriPattern'),
+        name: 'uri',
+        placeholder: '/example/uri',
+        value: route.uri,
+        errors: route.getErrors('uri'),
         required: true
     }) }}
 

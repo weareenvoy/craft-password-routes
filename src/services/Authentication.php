@@ -56,7 +56,7 @@ class Authentication extends Component
         }
 
         foreach ($this->_routes as $route){
-            if(preg_match('/'.preg_quote($route->uriPattern,'/').'/',$this->_getUrl(),$matches)){
+            if($route->uri == $this->_getUri()){
                 return $route;
             }
         }
@@ -82,9 +82,9 @@ class Authentication extends Component
         return self::ROUTE_SESSION_NAME . md5($key);
     }
 
-    protected function _getUrl(): string
+    protected function _getUri(): string
     {
-        return \Craft::$app->getRequest()->url;
+        return '/'.\Craft::$app->getRequest()->getFullPath();
     }
 
 }

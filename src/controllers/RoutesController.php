@@ -57,9 +57,12 @@ class RoutesController extends Controller
 
         $route = new Route();
         $route->id = \Craft::$app->getRequest()->getBodyParam('routeId');
-        $route->uriPattern = \Craft::$app->getRequest()->getBodyParam('uriPattern');
+        $route->uri = \Craft::$app->getRequest()->getBodyParam('uri');
         $route->username = \Craft::$app->getRequest()->getBodyParam('username');
         $route->password = \Craft::$app->getRequest()->getBodyParam('password');
+
+        //Sanitize Uri to the format that we want
+        $route->uri = PasswordRoutes::getInstance()->routes->parseUri($route->uri);
 
         if(!PasswordRoutes::getInstance()->routes->saveRoute($route)){
             \Craft::$app->getSession()->setError(\Craft::t('app', 'Couldn’t save the route.'));
