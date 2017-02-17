@@ -3,6 +3,7 @@ namespace weareenvoy\passwordroutes\controllers;
 
 
 use craft\web\Controller;
+use craft\web\View;
 use weareenvoy\passwordroutes\models\Route;
 use weareenvoy\passwordroutes\PasswordRoutes;
 use weareenvoy\passwordroutes\records\RouteRecord;
@@ -10,7 +11,7 @@ use yii\web\NotFoundHttpException;
 
 class RoutesController extends Controller
 {
-    protected $allowAnonymous = ['login'];
+    protected $allowAnonymous = ['login', 'login-post'];
 
     public function actionIndex()
     {
@@ -89,10 +90,37 @@ class RoutesController extends Controller
     public function actionLogin()
     {
         $routeId = \Craft::$app->getRequest()->getQueryParam('routeId');
+        $redirectTo = \Craft::$app->getRequest()->getQueryParam('redirectTo');
 
         $variables['routeId'] = $routeId;
+        $variables['redirectTo'] = $redirectTo ? $redirectTo : '';
+        // Hack to load plugin template in front facing side of the site.
+        \Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $html = $this->renderTemplate('passwordroutes/login',$variables);
+        \Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
 
-        return $this->renderTemplate('passwordroutes/login',$variables);
+        return $html;
     }
 
+    public function actionLoginPost()
+    {
+        $this->requirePostRequest();
+
+        $passwordRoutes = PasswordRoutes::getInstance();
+        $routeId = \Craft::$app->getRequest()->getRequiredBodyParam('routeId');
+        $username = \Craft::$app->getRequest()->getRequiredBodyParam('username');
+        $password = \Craft::$app->getRequest()->getRequiredBodyParam('password');
+        $redirect = \Craft::$app->getRequest()->getRequiredBodyParam('redirect');
+
+        //Check if its a successful login
+        if($passwordRoutes->authentication->login($username,$password,$routeId)){
+            return $this->redirectToPostedUrl();
+        }else{
+            \Craft::$app->getSession()->setError(\Craft::t('app', 'Incorrect Username and Password.'));
+
+            $variables['routeId'] = $routeId;
+            $variables['redirectTo'] = $redirect;
+            \Craft::$app->urlManager->setRouteParams($variables);
+        }
+    }
 }

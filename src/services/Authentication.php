@@ -17,16 +17,30 @@ class Authentication extends Component
     {
         //
         if($this->_matchedRoute !== null){
-            if($this->_getSession() != $this->_matchedRoute->uid){
+            if($this->_getSessionValue($this->_matchedRoute->id) != $this->_matchedRoute->uid){
                return true;
             }
         }else{
             if($this->_matchedRoute = $this->_getMatchedRoute()){
-                if($this->_getSession() != $this->_matchedRoute->uid){
+                if($this->_getSessionValue($this->_matchedRoute->id) != $this->_matchedRoute->uid){
                     return true;
                 }
             }
         }
+        return false;
+    }
+
+    public function login(string $username, string $password, int $routeId)
+    {
+        if(!$route = PasswordRoutes::getInstance()->routes->getRouteById($routeId)){
+            return false;
+        }
+
+        if($route->username == $username && $route->password == md5($password)){
+            $this->_setSession($route->id,$route->uid);
+            return true;
+        }
+
         return false;
     }
 
@@ -49,22 +63,23 @@ class Authentication extends Component
         return null;
     }
 
-    protected function _getSession()
+    protected function _getSessionValue($key)
     {
-        return \Craft::$app->session->get($this->_getSessionName());
+        return \Craft::$app->session->get($this->_getSessionName($key));
     }
 
-    protected function _setSession($value)
+    protected function _setSession(string $key, string $value)
     {
-        \Craft::$app->session->set($this->_getSessionName(),$value);
+        \Craft::$app->session->set($this->_getSessionName($key),$value);
     }
 
     /**
+     * @param string $key
      * @return string
      */
-    protected function _getSessionName(): string
+    protected function _getSessionName(string $key): string
     {
-        return self::ROUTE_SESSION_NAME . md5($this->_getUrl());
+        return self::ROUTE_SESSION_NAME . md5($key);
     }
 
     protected function _getUrl(): string

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Password Protected Route</title>
+    </head>
+
+    <body>
+        <h1>Login</h1>
+        {% set error = craft.app.session.getFlash('error') %}
+        {% if error %}<span>{{ error }}</span>{% endif %}
+
+        <form action="" method="post" accept-charset="UTF-8">
+            <input type="hidden" name="routeId" value="{{ routeId }}">
+            <input type="hidden" name="action" value="passwordroutes/routes/login-post">
+            {{ getCsrfInput() }}
+            {{ redirectInput(redirectTo) }}
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <button>Login</button>
+        </form>
+
+    </body>
+</html>
