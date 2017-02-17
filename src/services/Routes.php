@@ -179,7 +179,7 @@ class Routes extends Component
 
     public function parseUri(string $uri)
     {
-        return '/'.implode('/',explode('/',trim($uri,'/')));
+        return strtolower('/'.implode('/',explode('/',trim($uri,'/'))));
     }
 
 }
