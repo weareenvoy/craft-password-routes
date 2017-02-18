@@ -31,8 +31,7 @@ class PasswordRoutes extends Plugin
             if($passwordRoutes->authentication->isLoginRequired()){
                 //Query
                 $queryArr = [
-                    'routeId' => $passwordRoutes->authentication->getMatchedRoute()->id,
-                    'redirectTo' => \Craft::$app->request->url
+                    'routeId' => $passwordRoutes->authentication->getMatchedRoute()->id
                 ];
 
                 $query = http_build_query($queryArr);

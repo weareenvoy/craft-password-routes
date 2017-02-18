@@ -38,8 +38,10 @@
         type: 'password',
         name: 'password',
         value: route.password,
+
+        instructions:  route.id ? "Update the password by simply typing a new one"|t('app') : null,
         errors: route.getErrors('password'),
-        required: true
+        required: route.id ? false : true
     }) }}
 {% endblock %}
 

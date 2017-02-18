@@ -1,22 +1,49 @@
 <html>
     <head>
         <title>Password Protected Route</title>
+
+        <!-- Compiled and minified CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     </head>
 
     <body>
-        <h1>Login</h1>
-        {% set error = craft.app.session.getFlash('error') %}
-        {% if error %}<span>{{ error }}</span>{% endif %}
+        <div class="container">
+            <h1 class="centeralign">Route Protected <i class="large material-icons">lock_outline</i></h1>
+            {% set error = craft.app.session.getFlash('error') %}
 
-        <form action="" method="post" accept-charset="UTF-8">
-            <input type="hidden" name="routeId" value="{{ routeId }}">
-            <input type="hidden" name="action" value="passwordroutes/routes/login-post">
-            {{ getCsrfInput() }}
-            {{ redirectInput(redirectTo) }}
-            <input type="text" name="username">
-            <input type="password" name="password">
-            <button>Login</button>
-        </form>
+            {% if error %}
+                <div class="card-panel">
+                    <span class="red-text text-darken-2">{{ error }}</span>
+                </div>
+            {% endif %}
 
+            <form action="" method="post" accept-charset="UTF-8">
+                <input type="hidden" name="routeId" value="{{ route.id }}">
+                <input type="hidden" name="action" value="passwordroutes/routes/login-post">
+                {{ getCsrfInput() }}
+                {{ redirectInput(route.uri) }}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" name="username">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" name="password">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit">Login
+                </button>
+            </form>
+        </div>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     </body>
 </html>

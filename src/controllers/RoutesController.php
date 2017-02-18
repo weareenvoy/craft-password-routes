@@ -93,10 +93,8 @@ class RoutesController extends Controller
     public function actionLogin()
     {
         $routeId = \Craft::$app->getRequest()->getQueryParam('routeId');
-        $redirectTo = \Craft::$app->getRequest()->getQueryParam('redirectTo');
+        $variables['route'] = PasswordRoutes::getInstance()->routes->getRouteById($routeId);
 
-        $variables['routeId'] = $routeId;
-        $variables['redirectTo'] = $redirectTo ? $redirectTo : '';
         // Hack to load plugin template in front facing side of the site.
         \Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
         $html = $this->renderTemplate('passwordroutes/login',$variables);
@@ -120,9 +118,7 @@ class RoutesController extends Controller
             return $this->redirectToPostedUrl();
         }else{
             \Craft::$app->getSession()->setError(\Craft::t('app', 'Incorrect Username and Password.'));
-
-            $variables['routeId'] = $routeId;
-            $variables['redirectTo'] = $redirect;
+            $variables['route'] = $passwordRoutes->routes->getRouteById($routeId);
             \Craft::$app->urlManager->setRouteParams($variables);
         }
     }
